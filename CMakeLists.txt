@@ -4,4 +4,4 @@ project(patd_lab2)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(patd_lab2 main.cpp
-        include/DynamicArray.h)
+        include/core/DynamicArray.h)

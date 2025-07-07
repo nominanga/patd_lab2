@@ -27,21 +27,11 @@ public:
         std::copy(other.data, other.data + size, data);
     }
 
-    DynamicArray& operator=(const DynamicArray& other) {
-        if (this != &other) {
-            delete[] data;
-            size = other.size;
-            data = new T[size];
-            std::copy(other.data, other.data + size, data);
-        }
-        return *this;
-    }
-
     ~DynamicArray() {
         delete[] data;
     }
 
-    const T& Get(int index) {
+    T Get(int index) {
         if (index < 0 || index >= size) {
             throw std::out_of_range("index out of range");
         }
@@ -57,7 +47,7 @@ public:
         data[index] = value;
     }
 
-    [[nodiscard]] int GetSize() const {
+    int GetSize() const {
         return size;
     }
 
