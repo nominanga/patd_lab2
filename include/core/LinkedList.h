@@ -40,7 +40,15 @@ public:
     }
 
     void Clear() {
+        Node* current = head;
+        while (current) {
+            Node *prev = current;
+            current = current->next;
+            delete prev;
+        }
 
+        head = nullptr;
+        tail = nullptr;
     }
 
     void Append(T item) {
@@ -77,7 +85,7 @@ public:
         return tail->data;
     }
 
-    T Get(const int index) {
+    T Get(int index) {
         if (index < 0 || index >= size) {
             throw std::out_of_range("index out of range");
         }
@@ -91,18 +99,28 @@ public:
     }
 
     void InsertAt(T item, const int index) {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index > size) {
             throw std::out_of_range("index out of range");
+        }
+
+        if (index == 0) {
+            Prepend(item);
+            return;
+        }
+
+        if (index == size) {
+            Append(item);
+            return;
         }
 
         Node* new_node = new Node(item);
         Node* current = head;
-        for (int i = 0; i < index; i++) {
+        for (int i = 0; i < index-1; i++) {
             current = current->next;
         }
 
-        new_node->next = current;
-        current = new_node;
+        new_node->next = current->next;
+        current->next = new_node;
     }
 
     LinkedList* GetSubList(int startindex, int endindex) {
@@ -124,5 +142,9 @@ public:
         }
 
         return ConcatList;
+    }
+
+    int GetLength() {
+        return size;
     }
 };
