@@ -22,12 +22,13 @@ public:
         if (count < 0) {
             throw std::invalid_argument("count must be positive");
         }
+        size = count;
         for (int i = 0; i < count; i++) {
             Append(items[i]);
         }
     }
 
-    LinkedList(const LinkedList& other) : head(nullptr), tail(nullptr), size(other.size) {
+    LinkedList(const LinkedList& other) : head(nullptr), tail(nullptr), size(0) {
         Node* current = other.head;
         while (current) {
             Append(current->data);
@@ -49,26 +50,31 @@ public:
 
         head = nullptr;
         tail = nullptr;
+        size = 0;
     }
 
     void Append(T item) {
         Node* new_node = new Node(item);
         if (!head) {
-            head = new_node = tail;
+            head = new_node;
+            tail = new_node;
         } else {
             tail->next = new_node;
             tail = tail->next;
         }
+        ++size;
     }
 
     void Prepend(T item) {
         Node* new_node = new Node(item);
         if (!head) {
-            head = new_node = tail;
+            head = new_node;
+            tail = new_node;
         } else {
             new_node->next = head;
             head = new_node;
         }
+        ++size;
     }
 
     T GetFirst() {
@@ -121,11 +127,15 @@ public:
 
         new_node->next = current->next;
         current->next = new_node;
+        ++size;
     }
 
     LinkedList* GetSubList(int startindex, int endindex) {
         if (startindex < 0 || startindex >= size || endindex < 0 || endindex >= size) {
             throw std::out_of_range("index out of range");
+        }
+        if (endindex < startindex) {
+            throw std::invalid_argument("startindex should be less or equal to endindex");
         }
         auto SubList = new LinkedList();
         for (int i = startindex; i <= endindex; i++) {
@@ -135,7 +145,7 @@ public:
     }
 
     LinkedList* Concat(LinkedList *other) {
-        auto ConcatList = new LinkedList(this);
+        auto ConcatList = new LinkedList(*this);
 
         for (int i = 0; i < other->size; i++) {
             ConcatList->Append(other->Get(i));
