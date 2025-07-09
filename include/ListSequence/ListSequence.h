@@ -50,6 +50,10 @@ public:
         data = new LinkedList<T>(other.data);
     }
 
+    ~ListSequence() override {
+        delete data;
+    }
+
     T Get(int index) const override {
         return data->Get(index);
     }
