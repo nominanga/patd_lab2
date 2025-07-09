@@ -3,11 +3,7 @@
 
 template <typename T>
 class ImmutableArraySequence final : public ArraySequence<T> {
-public:
-    ImmutableArraySequence() : ArraySequence<T>() {}
-    ImmutableArraySequence(T* items, int count) : ArraySequence<T>(items, count) {}
-    ImmutableArraySequence(const ImmutableArraySequence<T>& other) : ArraySequence<T>(other) {}
-
+protected:
     Sequence<T>* Instance() override {
         return this->Clone();
     }
@@ -15,4 +11,8 @@ public:
     Sequence<T>* Clone() override {
         return new ImmutableArraySequence<T>(*this);
     }
+public:
+    ImmutableArraySequence() : ArraySequence<T>() {}
+    ImmutableArraySequence(T* items, int count) : ArraySequence<T>(items, count) {}
+    ImmutableArraySequence(const ImmutableArraySequence<T>& other) : ArraySequence<T>(other) {}
 };

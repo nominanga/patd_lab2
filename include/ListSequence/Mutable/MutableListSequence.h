@@ -3,11 +3,7 @@
 
 template <typename T>
 class MutableListSequence : public ListSequence<T> {
-public:
-    MutableListSequence() : ListSequence<T>() {}
-    MutableListSequence(T* items, int count) : ListSequence<T>(items, count) {}
-    MutableListSequence(const MutableListSequence<T>& other) : ListSequence<T>(other) {}
-
+protected:
     Sequence<T>* Instance() override {
         return this;
     }
@@ -15,4 +11,8 @@ public:
     Sequence<T>* Clone() override {
         return new MutableListSequence<T>(*this);
     }
+public:
+    MutableListSequence() : ListSequence<T>() {}
+    MutableListSequence(T* items, int count) : ListSequence<T>(items, count) {}
+    MutableListSequence(const MutableListSequence<T>& other) : ListSequence<T>(other) {}
 };
