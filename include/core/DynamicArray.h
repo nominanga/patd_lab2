@@ -9,13 +9,13 @@ class DynamicArray
     int size;
 
 public:
-    explicit DynamicArray(const int size) : size(size) {
+    DynamicArray(const int size) : size(size) {
         if (size < 0)
             throw std::invalid_argument("size must be positive");
         data = new T[size];
     }
 
-    explicit DynamicArray(T* input, const int count) : size(count) {
+    DynamicArray(T* input, const int count) : size(count) {
         if (count < 0)
             throw std::invalid_argument("size must be positive");
         data = new T[count];
