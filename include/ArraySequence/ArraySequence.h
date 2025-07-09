@@ -50,7 +50,7 @@ public:
     }
 
     ArraySequence(const ArraySequence<T>& other) {
-        data = new DynamicArray<T>(other.data);
+        data = new DynamicArray<T>(*other.data);
     }
 
     ~ArraySequence() override {

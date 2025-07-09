@@ -18,7 +18,6 @@ public:
     virtual Sequence<T>* GetSubsequence(int startindex, int endindex) = 0;
     virtual Sequence<T>* Concat(Sequence<T>* other) = 0;
 
-protected:
     virtual Sequence<T>* Instance() = 0;
     virtual Sequence<T>* AppendInternal(T item) = 0;
     virtual Sequence<T>* PrependInternal(T item) = 0;

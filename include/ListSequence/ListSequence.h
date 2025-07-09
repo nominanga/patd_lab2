@@ -47,7 +47,7 @@ public:
     }
 
     ListSequence(const ListSequence<T>& other) {
-        data = new LinkedList<T>(other.data);
+        data = new LinkedList<T>(*other.data);
     }
 
     ~ListSequence() override {
@@ -90,7 +90,8 @@ public:
 
     Sequence<T>* Concat(Sequence<T>* other) override {
         auto* seq = new ListSequence<T>(*this);
-        seq->ReplaceData(seq->data->Concat(other));
+        auto* otherList = dynamic_cast<ListSequence<T>*>(other);
+        seq->ReplaceData(this->data->Concat(otherList->data));
         return seq;
     }
 
