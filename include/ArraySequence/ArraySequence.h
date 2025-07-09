@@ -3,50 +3,13 @@
 #include "SequenceInterface/Sequence.h"
 
 template <typename T>
-class ArraySequence : Sequence<T> {
+class ArraySequence : public Sequence<T> {
 
-    DynamicArray<T>* data = nullptr;
+    DynamicArray<T>* data;
 
-public:
-    ArraySequence() {
-        data = new DynamicArray<T>(0);
-    }
-
-    ArraySequence(T* items, int count) {
-        data = new DynamicArray<T>(items, count);
-    }
-
-    ArraySequence(const ArraySequence<T>& other) {
-        int newSize = other.GetSize();
-        data = new DynamicArray<T>(newSize);
-
-        for (int i = 0; i < newSize; i++) {
-            data->Set(i, other.Get(i));
-        }
-    }
-
-    ~ArraySequence() override {
-        delete data;
-    }
-
-    virtual Sequence<T>* Instance() = 0;
-
-    T Get(int index) const override {
-        return data->Get(index);
-    }
-
-
-
-    T GetFirst() const override {
-        return data->Get(0);
-    }
-
-    T GetLast() const override {
-        return data->Get(data->GetSize() - 1);
-    }
-
-    T GetLength() const override {
-        return data->GetSize();
+protected:
+    ArraySequence<T>* Instance() override {
+        return this;
     }
 
     ArraySequence<T>* AppendInternal(T item) override {
@@ -73,6 +36,48 @@ public:
         return this;
     }
 
+    ArraySequence<T>* Clone() override {
+        return new ArraySequence<T>(*this);
+    }
+
+public:
+    ArraySequence() {
+        data = new DynamicArray<T>(0);
+    }
+
+    ArraySequence(T* items, int count) {
+        data = new DynamicArray<T>(items, count);
+    }
+
+    ArraySequence(const ArraySequence<T>& other) {
+        int newSize = other.GetLength();
+        data = new DynamicArray<T>(newSize);
+
+        for (int i = 0; i < newSize; i++) {
+            data->Set(i, other.Get(i));
+        }
+    }
+
+    ~ArraySequence() override {
+        delete data;
+    }
+
+    T Get(int index) const override {
+        return data->Get(index);
+    }
+
+    T GetFirst() const override {
+        return data->Get(0);
+    }
+
+    T GetLast() const override {
+        return data->Get(data->GetSize() - 1);
+    }
+
+    int GetLength() const override {
+        return data->GetSize();
+    }
+
     ArraySequence<T>* Append(T item) override {
         return Instance()->AppendInternal(item);
     }
@@ -86,9 +91,21 @@ public:
     }
 
     ArraySequence<T>* GetSubsequence(int startindex, int endindex) override {
+        auto seq = new ArraySequence<T>();
+
+        for (int i = startindex; i <= endindex; i++) {
+            seq->AppendInternal(data->Get(i));
+        }
+
+        return seq;
     }
 
     ArraySequence<T>* Concat(Sequence<T>* other) override {
+        auto seq = Clone();
+        for (int i = 0; i < other->GetLength(); i++) {
+            seq->AppendInternal(other->Get(i));
+        }
 
+        return seq;
     }
 };
