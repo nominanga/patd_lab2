@@ -8,11 +8,34 @@ class ArraySequence : Sequence<T> {
     DynamicArray<T>* data = nullptr;
 
 public:
+    ArraySequence() {
+        data = new DynamicArray<T>(0);
+    }
+
+    ArraySequence(T* items, int count) {
+        data = new DynamicArray<T>(items, count);
+    }
+
+    ArraySequence(const ArraySequence<T>& other) {
+        int newSize = other.GetSize();
+        data = new DynamicArray<T>(newSize);
+
+        for (int i = 0; i < newSize; i++) {
+            data->Set(i, other.Get(i));
+        }
+    }
+
+    ~ArraySequence() override {
+        delete data;
+    }
+
     virtual Sequence<T>* Instance() = 0;
 
     T Get(int index) const override {
         return data->Get(index);
     }
+
+
 
     T GetFirst() const override {
         return data->Get(0);
@@ -26,17 +49,19 @@ public:
         return data->GetSize();
     }
 
-    void AppendInternal(T item) override {
+    ArraySequence<T>* AppendInternal(T item) override {
         int size = data->GetSize();
         data->Resize(size + 1);
         data->Set(size, item);
+        return this;
     }
 
-    void PrependInternal(T item) override {
+    ArraySequence<T>* PrependInternal(T item) override {
         InsertAtInternal(0, item);
+        return this;
     }
 
-    void InsertAtInternal(int index, T item) override {
+    ArraySequence<T>* InsertAtInternal(int index, T item) override {
         int size = data->GetSize();
         data->Resize(++size);
 
@@ -45,6 +70,7 @@ public:
         }
 
         data->Set(index, item);
+        return this;
     }
 
     ArraySequence<T>* Append(T item) override {
@@ -60,10 +86,9 @@ public:
     }
 
     ArraySequence<T>* GetSubsequence(int startindex, int endindex) override {
-        return nullptr;
     }
 
     ArraySequence<T>* Concat(Sequence<T>* other) override {
-        return nullptr;
+
     }
 };

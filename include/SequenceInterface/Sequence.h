@@ -18,7 +18,7 @@ public:
     virtual Sequence<T>* GetSubsequence(int startindex, int endindex) = 0;
     virtual Sequence<T>* Concat(Sequence<T>* other) = 0;
 
-    virtual void AppendInternal(T item) = 0;
-    virtual void PrependInternal(T item) = 0;
-    virtual void InsertAtInternal(T item, int index) = 0;
+    virtual Sequence<T>* AppendInternal(T item) = 0;
+    virtual Sequence<T>* PrependInternal(T item) = 0;
+    virtual Sequence<T>* InsertAtInternal(T item, int index) = 0;
 };
