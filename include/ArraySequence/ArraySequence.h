@@ -8,23 +8,23 @@ class ArraySequence : public Sequence<T> {
     DynamicArray<T>* data;
 
 protected:
-    ArraySequence<T>* Instance() override {
+    Sequence<T>* Instance() override {
         return this;
     }
 
-    ArraySequence<T>* AppendInternal(T item) override {
+    Sequence<T>* AppendInternal(T item) override {
         int size = data->GetSize();
         data->Resize(size + 1);
         data->Set(size, item);
         return this;
     }
 
-    ArraySequence<T>* PrependInternal(T item) override {
+    Sequence<T>* PrependInternal(T item) override {
         InsertAtInternal(0, item);
         return this;
     }
 
-    ArraySequence<T>* InsertAtInternal(int index, T item) override {
+    Sequence<T>* InsertAtInternal(int index, T item) override {
         int size = data->GetSize();
         data->Resize(++size);
 
@@ -36,7 +36,7 @@ protected:
         return this;
     }
 
-    ArraySequence<T>* Clone() override {
+    Sequence<T>* Clone() override {
         return new ArraySequence<T>(*this);
     }
 
@@ -78,19 +78,19 @@ public:
         return data->GetSize();
     }
 
-    ArraySequence<T>* Append(T item) override {
+    Sequence<T>* Append(T item) override {
         return Instance()->AppendInternal(item);
     }
 
-    ArraySequence<T>* Prepend(T item) override {
+    Sequence<T>* Prepend(T item) override {
         return Instance()->PrependInternal(item);
     }
 
-    ArraySequence<T>* InsertAt(T index, T item) override {
+    Sequence<T>* InsertAt(T index, T item) override {
         return Instance()->InsertAtInternal(index, item);
     }
 
-    ArraySequence<T>* GetSubsequence(int startindex, int endindex) override {
+    Sequence<T>* GetSubsequence(int startindex, int endindex) override {
         auto seq = new ArraySequence<T>();
 
         for (int i = startindex; i <= endindex; i++) {
@@ -100,7 +100,7 @@ public:
         return seq;
     }
 
-    ArraySequence<T>* Concat(Sequence<T>* other) override {
+    Sequence<T>* Concat(Sequence<T>* other) override {
         auto seq = Clone();
         for (int i = 0; i < other->GetLength(); i++) {
             seq->AppendInternal(other->Get(i));
