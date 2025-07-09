@@ -50,12 +50,7 @@ public:
     }
 
     ArraySequence(const ArraySequence<T>& other) {
-        int newSize = other.GetLength();
-        data = new DynamicArray<T>(newSize);
-
-        for (int i = 0; i < newSize; i++) {
-            data->Set(i, other.Get(i));
-        }
+        data = new DynamicArray<T>(other.data);
     }
 
     ~ArraySequence() override {
