@@ -26,13 +26,13 @@ protected:
 
     Sequence<T>* InsertAtInternal(T item, int index) override {
         int size = data->GetSize();
-        data->Resize(++size);
+        if (index < 0 || index > size) {
+            throw std::out_of_range("index out of bounds");
+        }
+        data->Resize(size + 1);
 
-        T prev = data->Get(index);
-        for (int i = index + 1; i < size; i++) {
-            T tmp = prev;
-            prev = data->Get(i);
-            data->Set(i, tmp);
+        for (int i = size; i > index; --i) {
+            data->Set(i, data->Get(i - 1));
         }
 
         data->Set(index, item);
