@@ -1,13 +1,11 @@
 #include <iostream>
-#include <string>
 #include "../include/ArraySequence/Immutable/ImmutableArraySequence.h"
 #include "../include/ArraySequence/Mutable/MutableArraySequence.h"
 #include "../include/ListSequence/Immutable/ImmutableListSequence.h"
 #include "../include/ListSequence/Mutable/MutableListSequence.h"
-#include <vector>
+
 
 void printSequence(const Sequence<int>* seq) {
-    std::cout << "\n";
     for (int i = 0; i < seq->GetLength(); ++i) {
         std::cout << seq->Get(i) << " ";
     }
