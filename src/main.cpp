@@ -22,6 +22,7 @@ void append(Sequence<int>* seq, int value, bool isMutable) {
     else {
         auto* newSeq = seq->Append(value);
         printSequence(newSeq);
+        delete newSeq;
     }
 }
 
@@ -33,6 +34,7 @@ void prepend(Sequence<int>* seq, int value, bool isMutable) {
     else {
         auto* newSeq = seq->Prepend(value);
         printSequence(newSeq);
+        delete newSeq;
     }
 }
 
@@ -44,6 +46,7 @@ void insert(Sequence<int>* seq, int value, int index, bool isMutable) {
     else {
         auto* newSeq = seq->InsertAt(value, index);
         printSequence(newSeq);
+        delete newSeq;
     }
 }
 
@@ -54,10 +57,13 @@ void get(Sequence<int>* seq, int index) {
 void getSub(Sequence<int>* seq, int start, int end) {
     auto* subbed = seq->GetSubsequence(start, end);
     printSequence(subbed);
+    delete subbed;
 }
 
 void concat(Sequence<int>* seq1, Sequence<int>* seq2) {
-    printSequence(seq1->Concat(seq2));
+    auto* concated = seq1->Concat(seq2);
+    printSequence(concated);
+    delete concated;
 }
 
 void printSequenceActions() {
