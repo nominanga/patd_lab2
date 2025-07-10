@@ -22,7 +22,7 @@ public:
         if (count < 0) {
             throw std::invalid_argument("count must be positive");
         }
-        size = count;
+        size = 0;
         for (int i = 0; i < count; i++) {
             Append(items[i]);
         }

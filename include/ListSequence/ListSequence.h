@@ -84,7 +84,7 @@ public:
 
     Sequence<T>* GetSubsequence(int startindex, int endindex) override {
         auto* seq = new ListSequence<T>();
-        seq->ReplaceData(seq->data->GetSubList(startindex, endindex));
+        seq->ReplaceData(this->data->GetSubList(startindex, endindex));
         return seq;
     }
 

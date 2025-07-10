@@ -24,12 +24,15 @@ protected:
         return this;
     }
 
-    Sequence<T>* InsertAtInternal(int index, T item) override {
+    Sequence<T>* InsertAtInternal(T item, int index) override {
         int size = data->GetSize();
         data->Resize(++size);
 
+        T prev = data->Get(index);
         for (int i = index + 1; i < size; i++) {
-            data->Set(i, data->Get(i - 1));
+            T tmp = prev;
+            prev = data->Get(i);
+            data->Set(i, tmp);
         }
 
         data->Set(index, item);
@@ -81,8 +84,8 @@ public:
         return Instance()->PrependInternal(item);
     }
 
-    Sequence<T>* InsertAt(T index, T item) override {
-        return Instance()->InsertAtInternal(index, item);
+    Sequence<T>* InsertAt(T item, int index) override {
+        return Instance()->InsertAtInternal(item, index);
     }
 
     Sequence<T>* GetSubsequence(int startindex, int endindex) override {

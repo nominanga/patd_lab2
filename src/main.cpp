@@ -1,32 +1,38 @@
 #include <iostream>
+#include <string>
 #include "../include/ArraySequence/Immutable/ImmutableArraySequence.h"
 #include "../include/ArraySequence/Mutable/MutableArraySequence.h"
 #include "../include/ListSequence/Immutable/ImmutableListSequence.h"
 #include "../include/ListSequence/Mutable/MutableListSequence.h"
 
 template<typename T>
-void printSequence(const Sequence<T>& seq) {
-    for (int i = 0; i < seq.GetLength(); ++i) {
-        std::cout << seq.Get(i) << " ";
+void printSequence(const Sequence<T>* seq) {
+    std::cout << "Значения Sequence" << std::endl;
+    for (int i = 0; i < seq->GetLength(); ++i) {
+        std::cout << seq->Get(i) << " ";
     }
     std::cout << "\n";
 }
 
+template<typename T>
+void inputSequence(Sequence<T>* seq, int size) {
+    std::cout << "Введите значения(через пробел)";
+    for (int i = 0; i < size; ++i) {
+        T item;
+        std::cin >> item;
+        seq->Append(item);
+    }
+    std::cout << "\n";
+}
+
+
+
+
+
 int main() {
-    std::cout << "Testing MutableArraySequence:\n";
-    MutableArraySequence<int> mas;
-    mas.Append(1);
-    mas.Append(2);
-    mas.Append(3);
-    printSequence(mas);
-
-
-    std::cout << "Testing MutableListSequence:\n";
-    MutableListSequence<int> mls;
-    mls.Append(10);
-    mls.Append(20);
-    mls.Append(30);
-    printSequence(mls);
+    std::string command;
+    while (command != "exit") {
+    }
 
     return 0;
 }
