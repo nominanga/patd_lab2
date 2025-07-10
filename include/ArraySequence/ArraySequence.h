@@ -20,7 +20,7 @@ protected:
     }
 
     Sequence<T>* PrependInternal(T item) override {
-        InsertAtInternal(0, item);
+        InsertAtInternal(item, 0);
         return this;
     }
 
