@@ -38,6 +38,10 @@ protected:
         return this;
     }
 
+    Sequence<T>* Clone() override {
+        return new ArraySequence<T>(*this);
+    }
+
 
 public:
     ArraySequence() {
