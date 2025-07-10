@@ -20,8 +20,7 @@ protected:
     }
 
     Sequence<T>* PrependInternal(T item) override {
-        InsertAtInternal(item, 0);
-        return this;
+        return InsertAtInternal(item, 0);
     }
 
     Sequence<T>* InsertAtInternal(T item, int index) override {
@@ -34,14 +33,11 @@ protected:
         for (int i = size; i > index; --i) {
             data->Set(i, data->Get(i - 1));
         }
-
         data->Set(index, item);
+
         return this;
     }
 
-    Sequence<T>* Clone() override {
-        return new ArraySequence<T>(*this);
-    }
 
 public:
     ArraySequence() {
